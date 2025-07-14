@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Daftar Paste - Pastebin Forum{% endblock %}
+
+{% block content %}
+<h2>Daftar Paste Terbaru</h2>
+
+<p><strong><a href="{{ url_for('create_paste') }}">Buat Paste Baru</a></strong></p>
+
+{% if pastes %}
+    <table border="1" cellpadding="5" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Judul</th>
+                <th>Penulis</th>
+                <th>Tanggal</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for paste in pastes %}
+            <tr>
+                <td><a href="{{ url_for('view_paste', paste_id=paste.id) }}">{{ paste.title }}</a></td>
+                <td>{{ paste.author }}</td>
+                <td>{{ paste.created_at[:19] }}</td>
+                <td>
+                    <a href="{{ url_for('view_paste', paste_id=paste.id) }}">Lihat</a> |
+                    <form method="POST" action="{{ url_for('delete_paste', paste_id=paste.id) }}" style="display:inline;">
+                        <input type="submit" value="Hapus" onclick="return confirm('Apakah Anda yakin ingin menghapus paste ini?')">
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p><em>Belum ada paste. <a href="{{ url_for('create_paste') }}">Buat yang pertama!</a></em></p>
+{% endif %}
+{% endblock %}

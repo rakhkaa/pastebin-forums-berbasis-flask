@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Pencarian - Pastebin Forum{% endblock %}
+
+{% block content %}
+<h2>Pencarian Paste</h2>
+
+<form method="GET">
+    <table>
+        <tr>
+            <td><label for="q">Kata kunci:</label></td>
+            <td><input type="text" id="q" name="q" size="40" value="{{ query }}" placeholder="Masukkan kata kunci pencarian"></td>
+            <td><input type="submit" value="Cari"></td>
+        </tr>
+    </table>
+</form>
+
+{% if query %}
+    <h3>Hasil pencarian untuk: "{{ query }}"</h3>
+    
+    {% if results %}
+        <table border="1" cellpadding="5" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>Judul</th>
+                    <th>Penulis</th>
+                    <th>Tanggal</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for paste in results %}
+                <tr>
+                    <td><a href="{{ url_for('view_paste', paste_id=paste.id) }}">{{ paste.title }}</a></td>
+                    <td>{{ paste.author }}</td>
+                    <td>{{ paste.created_at[:19] }}</td>
+                    <td><a href="{{ url_for('view_paste', paste_id=paste.id) }}">Lihat</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p><em>Tidak ada hasil yang ditemukan untuk "{{ query }}"</em></p>
+    {% endif %}
+{% endif %}
+{% endblock %}

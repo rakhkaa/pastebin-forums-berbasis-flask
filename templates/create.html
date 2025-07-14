@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Buat Paste Baru - Pastebin Forum{% endblock %}
+
+{% block content %}
+<h2>Buat Paste Baru</h2>
+
+{% if error %}
+    <p style="color: red;"><strong>Error:</strong> {{ error }}</p>
+{% endif %}
+
+<form method="POST">
+    <table>
+        <tr>
+            <td><label for="title">Judul:</label></td>
+            <td><input type="text" id="title" name="title" size="50" placeholder="Masukkan judul (opsional)"></td>
+        </tr>
+        <tr>
+            <td><label for="author">Penulis:</label></td>
+            <td><input type="text" id="author" name="author" size="30" placeholder="Nama Anda (opsional)"></td>
+        </tr>
+        <tr>
+            <td><label for="content">Konten:</label></td>
+            <td><textarea id="content" name="content" rows="15" cols="80" placeholder="Masukkan konten paste di sini..." required></textarea></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <input type="submit" value="Buat Paste">
+                <a href="{{ url_for('index') }}">Batal</a>
+            </td>
+        </tr>
+    </table>
+</form>
+{% endblock %}
